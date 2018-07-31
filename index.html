@@ -7,16 +7,36 @@
 	
 	<div id="app">
 		<p>{{ message }}</p>
+		<ol>
+			<todo-item
+				v-for="item in groceryList"
+				v-bind:todo="item"
+				v-bind:key="item.id">
+			</todo-item>
+		</ol>
 	</div>
 
 	<script src="scripts/vue.js"></script>
 	<script>
-		new Vue({
+
+		// 组建必须在Vue实例之前
+		Vue.component('todo-item', {
+			props: ['todo'],
+			template: '<li>{{ todo.text }}</li>'
+		});
+
+		var app = new Vue({
 			el: '#app',
 			data:{
-				message: 'Hello!'
+				message: 'Hello!',
+				groceryList: [
+					{ id: 0, text: '蔬菜' },
+					{ id: 1, text: '奶酪' },
+					{ id: 2, text: '其它' }
+				]
 			}
 		});
+
 	</script>
 </body>
 </html>
