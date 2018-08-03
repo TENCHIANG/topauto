@@ -13,13 +13,86 @@
 	">
 	<link rel="shortcut icon" href="images/icon.png">
 	<link rel="apple-touch-icon" href="images/icon.png">
-	<title>长沙拓欧科技有限公司官网</title>
+	<title></title>
+	
+	<style>
 
+		*{margin: 0; padding: 0;}
+
+		[v-cloak]{
+			display: none;
+		}
+
+		#header{
+			height: 110px;
+			background: black;
+		}
+		#nav{
+			height: 500px;
+			background: #222124;
+		}
+		#page{
+			min-height: 1263px;
+			background: #f6f6f6;
+		}
+		#footer{
+			height: 383px;
+			background: blue;
+		}
+
+		#top{
+			height: 40px;
+			background: #151515;
+			color: #fff;
+			line-height: 2.5rem;
+		}
+
+		#menu{
+			height: calc(100% - 40px);
+			background: #f6f6f6;
+		}
+
+		#contact{
+			height: 324px;
+			background: #29262a;
+		}
+
+		#copyright{
+			height: calc(100% - 324px);
+			background: #1b181c;
+		}
+
+		.contianer{
+		    max-width: 1200px;
+		    margin: 0 auto;
+		}
+
+	</style>
 
 </head>
 <body>
+
+	<div id="app" v-cloak>
+		<div id="header">
+			<div id="top">
+				<div class="contianer">
+					<span style="float: left;">{{ $t('welcome') }}</span>
+					<span style="float: right;">{{ $t('hotline') }}{{ phone_number }}</span>
+				</div>
+			</div>
+			<div id="menu"></div>
+		</div>
+		<div id="nav">
+		</div>
+		<div id="page">
+		</div>
+		<div id="footer">
+			<div id="contact"></div>
+			<div id="copyright"></div>
+		</div>
+	</div>
 	
-	<div id="app">
+<!-- 	<div id="app">
 		<p>{{ message }}</p>
 		<ol>
 			<todo-item
@@ -28,28 +101,66 @@
 				v-bind:key="item.id">
 			</todo-item>
 		</ol>
-	</div>
+	</div> -->
 
 	<script src="scripts/vue.js"></script>
+	<script src="scripts/vue-i18n.js"></script>
 	<script>
 
-		// 组建必须在Vue实例之前
-		Vue.component('todo-item', {
-			props: ['todo'],
-			template: '<li>{{ todo.text }}</li>'
-		});
+		'use strict'
 
-		var app = new Vue({
-			el: '#app',
-			data:{
-				message: 'Hello!',
-				groceryList: [
-					{ id: 0, text: '蔬菜' },
-					{ id: 1, text: '奶酪' },
-					{ id: 2, text: '其它' }
-				]
+		const i18n = new VueI18n({
+			locale: 'zh',
+			messages: {
+				zh: {
+					title: '长沙拓欧科技有限公司官网',
+					welcome: '您好！欢迎访问拓欧科技！',
+					hotline: '销售热线：',
+				},
+				en: {
+					title: 'Changsha Top-Auto Co., Ltd.',
+					welcome: 'Hello! Welcome to visit our website!',
+					hotline: 'Hotline: ',
+				}
 			}
-		});
+		})
+
+		const app = new Vue({
+			el: '#app',
+			i18n,
+			data: {
+				i18n: i18n,
+				phone_number: '18932483051',
+			},
+			created: function(){
+				document.title = this.$t('title')
+			},
+			watch: {
+				'i18n.locale': function(){
+					// document.title = i18n.messages[i18n.locale].title
+					// document.querySelector('meta[name="keywords"]').getAttribute('content')
+					document.title = this.$t('title')
+				}
+			}
+		})
+
+		// // 组建必须在Vue实例之前
+		// Vue.component('todo-item', {
+		// 	props: ['todo'],
+		// 	template: '<li>{{ todo.text }}</li>'
+		// });
+		// 
+		// var app = new Vue({
+		// 	el: '#app',
+		// 	data:{
+		// 		message: 'Hello!',
+		// 		groceryList: [
+		// 			{ id: 0, text: '蔬菜' },
+		// 			{ id: 1, text: '奶酪' },
+		// 			{ id: 2, text: '其它' }
+		// 		]
+		// 	}
+		// });
 
 	</script>
 </body>
