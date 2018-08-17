@@ -103,9 +103,10 @@
 		#menu>.contianer{
 		    height: 100%;
 		    display: flex;
+		    line-height: 4rem;
 		}
 
-		#logo{
+		#menu-logo{
 		    width: 130px;
 		    height: 100%;
 		    /*background: url(images/icon.png) 0 no-repeat / 40%;*/
@@ -116,44 +117,46 @@
 		    font-size: 0.8rem;
 		}
 
-		#logo:before{
+		#menu-logo:before{
 		    content: attr(before);
 		    position: relative;
-		    top: 1rem;
+		    /*top: 1rem;*/
+		    top: -0.5rem;
 		    left: 4rem;
 		}
 
-		#logo:after{
+		#menu-logo:after{
 		    content: attr(after);
 		    position: relative;
-		    top: 2.3rem;
+		    /*top: 2.3rem;*/
+		    top: 1rem;
 		    left: 0.5rem;
 		}
 
-		#L1menu{
+		#menu-nav{
 			font-size: 1rem;
+			height: 100%;
 		}
 
-		#L1menu>li{
+		#menu-nav>li{
 		    float: left;
 		    width: 148px;
 		    text-align: center;
 		    height: 100%;
-		    line-height: 4rem;
 		}
 
-		#L1menu>li>a{
+		#menu-nav>li>a{
 		    display: block;
 		    height: 100%;
 		}
 
-		#L1menu>li>ul{
+		#menu-nav>li>ul{
 		    line-height: 2rem;
 		    background: #fff;
 		    opacity: 0.9;
 		}
 
-		#L1menu>li>ul:before{
+		#menu-nav>li>ul:before{
 		    content: "";
 		    background: blue;
 		    width: 100%;
@@ -162,15 +165,15 @@
 		    /* transform: scale(0.99); */
 		}
 
-		#L1menu>li>ul>li{
+		#menu-nav>li>ul>li{
 			
 		}
 
-		#menu>.contianer:after{
+/*		#menu>.contianer:after{
 		    content: attr(langsw);
 		    line-height: 4rem;
 		    margin: 0 auto;
-		}
+		}*/
 
 		.fade-enter-active, .fade-leave-active {
 		  transition: opacity .5s;
@@ -190,56 +193,37 @@
 				<div class="contianer">
 					<span>{{ $t('welcome') }}</span>
 					<a id="hotline" :href="'tel:'+phone_number">{{ $t('hotline') }}{{ phone_number }}</a>
-				</div>
+				</div>	
 			</div>
 			<div id="menu">
-				<div class="contianer" :langsw="$t('langsw')">
-					<div id="logo" before="" after=""></div>
-					<ul id="L1menu">
-						<li>
-							<a href="#">{{ $t('menu.home') }}</a>
-						</li>
-						<li>
-							<a href="#" @click="showToggle">{{ $t('menu.products') }}</a>
-							<ul v-show="isShow">
-								<li><a href="#">到此一游</a></li>
-								<li><a href="#">到此一游</a></li>
-								<li><a href="#">到此一游</a></li>
+				<!-- <div class="contianer" :langsw="$t('langsw')"> -->
+				<div class="contianer">
+					<!-- <ul id="menu-nav">
+						<li v-for="l1 of $t('menu') ">
+							<a @click="showToggle" href="javascript:">{{ l1[0] }}</a>
+							<ul v-show="isShow && l1.length > 1">
+								<li v-for="l2 of l1">
+									<a href="javascript:">{{ l2 }}</a>
+								</li>
 							</ul>
 						</li>
-						<li>
-							<a href="#" @click="showToggle">{{ $t('menu.solution') }}</a>
-							<ul v-show="isShow">
-								<li><a href="#">到此一游</a></li>
-								<li><a href="#">到此一游</a></li>
-								<li><a href="#">到此一游</a></li>
-							</ul>
-						</li>
-						<li>
-							<a href="#" @click="showToggle">{{ $t('menu.support') }}</a>
-							<ul v-show="isShow">
-								<li><a href="#">到此一游</a></li>
-								<li><a href="#">到此一游</a></li>
-								<li><a href="#">到此一游</a></li>
-							</ul>
-						</li>
-						<li>
-							<a href="#" @click="showToggle">{{ $t('menu.iot') }}</a>
-							<ul v-show="isShow">
-								<li><a href="#">到此一游</a></li>
-								<li><a href="#">到此一游</a></li>
-								<li><a href="#">到此一游</a></li>
-							</ul>
-						</li>
-						<li>
-							<a href="#" @click="showToggle">{{ $t('menu.about') }}</a>
-							<ul v-show="isShow">
-								<li><a href="#">到此一游</a></li>
-								<li><a href="#">到此一游</a></li>
-								<li><a href="#">到此一游</a></li>
+					</ul> -->
+					<div id="menu-logo" before="" after=""></div>
+					<ul id="menu-nav">
+						<li v-for="l1 of $t('menu') ">
+							<a @click="showToggle" href="javascript:">{{ l1[0] }}</a>
+							<ul v-show="isShow && l1.length > 1">
+								<li v-for="l2 of l1">
+									<a href="javascript:">{{ l2 }}</a>
+								</li>
 							</ul>
 						</li>
 					</ul>
+					<div id ="menu-langsw">
+						<a @click="changelang(this)" id="langsw-zh" href="javascript:">{{ $t('zh') }}</a>
+						<span> | </span>
+						<a @click="changelang(this)" id="langsw-en" href="javascript:">{{ $t('en') }}</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -263,6 +247,8 @@
 			locale: 'zh',
 			messages: {
 				zh: {
+					zh: '中文',
+					en: '英文',
 					// title: '长沙拓欧科技有限公司官网',
 					title: '拓欧科技',
 					welcome: '您好！欢迎访问拓欧科技！',
@@ -271,17 +257,44 @@
 						before: 'Top-Auto',
 						after: '拓欧科技',
 					},
-					menu: {
-						home: "首页",
-						products: "产品中心",
-						solution: "解决方案",
-						support: "服务与支持",
-						iot: "物联网",
-						about: "关于拓欧",
-					},
+					// menu: {
+					// 	home: "首页",
+					// 	products: "产品中心",
+					// 	solution: "解决方案",
+					// 	support: "服务与支持",
+					// 	iot: "物联网",
+					// 	about: "关于拓欧",
+					// },
+					menu: [
+						[
+							'首页',
+						],
+						[ 
+							'产品中心',
+							'到此一游',
+						],
+						[
+							'解决方案',
+							'到此一游',
+						],
+						[ 
+							'服务与支持',
+							'到此一游',
+						],
+						[ 
+							'物联网',
+							'到此一游',
+						],
+						[
+							'关于拓欧',
+							'到此一游',
+						],
+					],
 					langsw: "中文 | 英文",
 				},
 				en: {
+					zh: 'Chinese',
+					en: 'English',
 					title: 'Changsha Top-Auto Co., Ltd.',
 					welcome: 'Hello! Welcome to visit our website!',
 					hotline: 'Hotline: ',
@@ -289,14 +302,39 @@
 						before: 'Top-Auto',
 						after: ' Co.,Ltd.',
 					},
-					menu: {
-						home: "Home",
-						products: "Products",
-						solution: "Solution",
-						support: "Support",
-						iot: "ioT",
-						about: "About",
-					},
+					// menu: {
+					// 	home: "Home",
+					// 	products: "Products",
+					// 	solution: "Solution",
+					// 	support: "Support",
+					// 	iot: "ioT",
+					// 	about: "About",
+					// },
+					menu: [
+						[
+							'Home',
+						],
+						[ 
+							'Products',
+							'I am comming!',
+						],
+						[
+							'Solution',
+							'I am comming!',
+						],
+						[ 
+							'Support',
+							'I am comming!',
+						],
+						[ 
+							'ioT',
+							'I am comming!',
+						],
+						[
+							'About',
+							'I am comming!',
+						],
+					],
 					langsw: "Chinese | English",
 				}
 			}
@@ -311,22 +349,26 @@
 				isShow: false,
 			},
 			methods: {
-				showToggle:function(){
+				showToggle: function(){
 					this.isShow = !this.isShow
+				},
+				changelang: function(that){
+					// this.$t.locale = (this.$t.locale == 'zh') ? 'en' : 'zh'
+					console.log(that);
 				},
 			},
 			created: function(){
 				document.title = this.$t('title')
-				document.querySelector('#logo').setAttribute('before', this.$t('logo.before'))
-				document.querySelector('#logo').setAttribute('after', this.$t('logo.after'))
+				document.querySelector('#menu-logo').setAttribute('before', this.$t('logo.before'))
+				document.querySelector('#menu-logo').setAttribute('after', this.$t('logo.after'))
 			},
 			watch: {
 				'i18n.locale': function(){
 					// document.title = i18n.messages[i18n.locale].title
 					// document.querySelector('meta[name="keywords"]').getAttribute('content')
 					document.title = this.$t('title')
-					document.querySelector('#logo').setAttribute('before', this.$t('logo.before'))
-					document.querySelector('#logo').setAttribute('after', this.$t('logo.after'))
+					document.querySelector('#menu-logo').setAttribute('before', this.$t('logo.before'))
+					document.querySelector('#menu-logo').setAttribute('after', this.$t('logo.after'))
 				}
 			}
 		})
