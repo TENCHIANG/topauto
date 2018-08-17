@@ -17,10 +17,32 @@
 	
 	<style>
 
-		*{margin: 0; padding: 0;}
+
+		body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; }
+		body { background:#fff; color:#555; font-size:14px; font-family: Verdana, Arial, Helvetica, sans-serif; }
+		td,th,caption { font-size:14px; }
+		h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
+		address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal;}
+		a { color:#555; text-decoration:none; }
+		a:hover { text-decoration:none; }
+		img { border:none; }
+		ol,ul,li { list-style:none; }
+		input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; }
+		table { border-collapse:collapse; }
+		html {overflow-y: scroll;}
+		.clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
+		/*.clearfix { *zoom:1; }*/
+
+
+
 
 		[v-cloak]{
 			display: none;
+		}
+
+		#app{
+			/* 保证在小分辨率下不崩开 */
+			min-width: 1280px;
 		}
 
 		#header{
@@ -67,6 +89,96 @@
 		    margin: 0 auto;
 		}
 
+		#hotline{
+		    float: right;
+		    /* a */
+		    color: #fff;
+		    cursor: pointer;
+		    text-decoration: none;
+
+		    background: url(images/hotline.png) 0 no-repeat;
+		    text-indent: 1.2rem;
+		}
+
+		#menu>.contianer{
+		    height: 100%;
+		    display: flex;
+		}
+
+		#logo{
+		    width: 130px;
+		    height: 100%;
+		    /*background: url(images/icon.png) 0 no-repeat / 40%;*/
+		    background-image: url(images/icon.png);
+		    background-repeat: no-repeat;
+		    background-size: 40%;
+		    background-position: 0;
+		    font-size: 0.8rem;
+		}
+
+		#logo:before{
+		    content: attr(before);
+		    position: relative;
+		    top: 1rem;
+		    left: 4rem;
+		}
+
+		#logo:after{
+		    content: attr(after);
+		    position: relative;
+		    top: 2.3rem;
+		    left: 0.5rem;
+		}
+
+		#L1menu{
+			font-size: 1rem;
+		}
+
+		#L1menu>li{
+		    float: left;
+		    width: 148px;
+		    text-align: center;
+		    height: 100%;
+		    line-height: 4rem;
+		}
+
+		#L1menu>li>a{
+		    display: block;
+		    height: 100%;
+		}
+
+		#L1menu>li>ul{
+		    line-height: 2rem;
+		    background: #fff;
+		    opacity: 0.9;
+		}
+
+		#L1menu>li>ul:before{
+		    content: "";
+		    background: blue;
+		    width: 100%;
+		    display: block;
+		    height: 2px;
+		    /* transform: scale(0.99); */
+		}
+
+		#L1menu>li>ul>li{
+			
+		}
+
+		#menu>.contianer:after{
+		    content: attr(langsw);
+		    line-height: 4rem;
+		    margin: 0 auto;
+		}
+
+		.fade-enter-active, .fade-leave-active {
+		  transition: opacity .5s;
+		}
+		.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+		  opacity: 0;
+		}
+
 	</style>
 
 </head>
@@ -76,11 +188,60 @@
 		<div id="header">
 			<div id="top">
 				<div class="contianer">
-					<span style="float: left;">{{ $t('welcome') }}</span>
-					<span style="float: right;">{{ $t('hotline') }}{{ phone_number }}</span>
+					<span>{{ $t('welcome') }}</span>
+					<a id="hotline" :href="'tel:'+phone_number">{{ $t('hotline') }}{{ phone_number }}</a>
 				</div>
 			</div>
-			<div id="menu"></div>
+			<div id="menu">
+				<div class="contianer" :langsw="$t('langsw')">
+					<div id="logo" before="" after=""></div>
+					<ul id="L1menu">
+						<li>
+							<a href="#">{{ $t('menu.home') }}</a>
+						</li>
+						<li>
+							<a href="#" @click="showToggle">{{ $t('menu.products') }}</a>
+							<ul v-show="isShow">
+								<li><a href="#">到此一游</a></li>
+								<li><a href="#">到此一游</a></li>
+								<li><a href="#">到此一游</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#" @click="showToggle">{{ $t('menu.solution') }}</a>
+							<ul v-show="isShow">
+								<li><a href="#">到此一游</a></li>
+								<li><a href="#">到此一游</a></li>
+								<li><a href="#">到此一游</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#" @click="showToggle">{{ $t('menu.support') }}</a>
+							<ul v-show="isShow">
+								<li><a href="#">到此一游</a></li>
+								<li><a href="#">到此一游</a></li>
+								<li><a href="#">到此一游</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#" @click="showToggle">{{ $t('menu.iot') }}</a>
+							<ul v-show="isShow">
+								<li><a href="#">到此一游</a></li>
+								<li><a href="#">到此一游</a></li>
+								<li><a href="#">到此一游</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#" @click="showToggle">{{ $t('menu.about') }}</a>
+							<ul v-show="isShow">
+								<li><a href="#">到此一游</a></li>
+								<li><a href="#">到此一游</a></li>
+								<li><a href="#">到此一游</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 		<div id="nav">
 		</div>
@@ -91,17 +252,6 @@
 			<div id="copyright"></div>
 		</div>
 	</div>
-	
-<!-- 	<div id="app">
-		<p>{{ message }}</p>
-		<ol>
-			<todo-item
-				v-for="item in groceryList"
-				v-bind:todo="item"
-				v-bind:key="item.id">
-			</todo-item>
-		</ol>
-	</div> -->
 
 	<script src="scripts/vue.js"></script>
 	<script src="scripts/vue-i18n.js"></script>
@@ -109,58 +259,77 @@
 
 		'use strict'
 
-		const i18n = new VueI18n({
+		var i18n = new VueI18n({
 			locale: 'zh',
 			messages: {
 				zh: {
-					title: '长沙拓欧科技有限公司官网',
+					// title: '长沙拓欧科技有限公司官网',
+					title: '拓欧科技',
 					welcome: '您好！欢迎访问拓欧科技！',
 					hotline: '销售热线：',
+					logo: {
+						before: 'Top-Auto',
+						after: '拓欧科技',
+					},
+					menu: {
+						home: "首页",
+						products: "产品中心",
+						solution: "解决方案",
+						support: "服务与支持",
+						iot: "物联网",
+						about: "关于拓欧",
+					},
+					langsw: "中文 | 英文",
 				},
 				en: {
 					title: 'Changsha Top-Auto Co., Ltd.',
 					welcome: 'Hello! Welcome to visit our website!',
 					hotline: 'Hotline: ',
+					logo: {
+						before: 'Top-Auto',
+						after: ' Co.,Ltd.',
+					},
+					menu: {
+						home: "Home",
+						products: "Products",
+						solution: "Solution",
+						support: "Support",
+						iot: "ioT",
+						about: "About",
+					},
+					langsw: "Chinese | English",
 				}
 			}
 		})
 
-		const app = new Vue({
+		var app = new Vue({
 			el: '#app',
 			i18n,
 			data: {
 				i18n: i18n,
 				phone_number: '18932483051',
+				isShow: false,
+			},
+			methods: {
+				showToggle:function(){
+					this.isShow = !this.isShow
+				},
 			},
 			created: function(){
 				document.title = this.$t('title')
+				document.querySelector('#logo').setAttribute('before', this.$t('logo.before'))
+				document.querySelector('#logo').setAttribute('after', this.$t('logo.after'))
 			},
 			watch: {
 				'i18n.locale': function(){
 					// document.title = i18n.messages[i18n.locale].title
 					// document.querySelector('meta[name="keywords"]').getAttribute('content')
 					document.title = this.$t('title')
+					document.querySelector('#logo').setAttribute('before', this.$t('logo.before'))
+					document.querySelector('#logo').setAttribute('after', this.$t('logo.after'))
 				}
 			}
 		})
-
-		// // 组建必须在Vue实例之前
-		// Vue.component('todo-item', {
-		// 	props: ['todo'],
-		// 	template: '<li>{{ todo.text }}</li>'
-		// });
-		// 
-		// var app = new Vue({
-		// 	el: '#app',
-		// 	data:{
-		// 		message: 'Hello!',
-		// 		groceryList: [
-		// 			{ id: 0, text: '蔬菜' },
-		// 			{ id: 1, text: '奶酪' },
-		// 			{ id: 2, text: '其它' }
-		// 		]
-		// 	}
-		// });
 
 	</script>
 </body>
