@@ -220,9 +220,9 @@
 						</li>
 					</ul>
 					<div id ="menu-langsw">
-						<a @click="changelang(this)" id="langsw-zh" href="javascript:">{{ $t('zh') }}</a>
+						<a @click="changelang('zh')" id="langsw-zh" href="javascript:">{{ $t('zh') }}</a>
 						<span> | </span>
-						<a @click="changelang(this)" id="langsw-en" href="javascript:">{{ $t('en') }}</a>
+						<a @click="changelang('en')" id="langsw-en" href="javascript:">{{ $t('en') }}</a>
 					</div>
 				</div>
 			</div>
@@ -352,9 +352,9 @@
 				showToggle: function(){
 					this.isShow = !this.isShow
 				},
-				changelang: function(that){
-					// this.$t.locale = (this.$t.locale == 'zh') ? 'en' : 'zh'
-					console.log(that);
+				changelang: function(lang){
+					if (this.i18n.locale != lang)
+						this.i18n.locale = lang
 				},
 			},
 			created: function(){
