@@ -136,6 +136,7 @@
 		#menu-nav{
 			font-size: 1rem;
 			height: 100%;
+			margin: 0 auto;
 		}
 
 		#menu-nav>li{
@@ -150,23 +151,19 @@
 		    height: 100%;
 		}
 
-		#menu-nav>li>ul{
+		#menu-nav>li ul{
 		    line-height: 2rem;
 		    background: #fff;
-		    opacity: 0.9;
+		    /*opacity: 0.9;*/
 		}
 
-		#menu-nav>li>ul:before{
+		#menu-nav>li ul>li:nth-child(1):before{
 		    content: "";
 		    background: blue;
 		    width: 100%;
 		    display: block;
 		    height: 2px;
-		    /* transform: scale(0.99); */
-		}
-
-		#menu-nav>li>ul>li{
-			
+		    /*transform: scale(0.99); */
 		}
 
 /*		#menu>.contianer:after{
@@ -176,7 +173,7 @@
 		}*/
 
 		.fade-enter-active, .fade-leave-active {
-		  transition: opacity .5s;
+		  transition: opacity 3s;
 		}
 		.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
 		  opacity: 0;
@@ -196,33 +193,25 @@
 				</div>	
 			</div>
 			<div id="menu">
-				<!-- <div class="contianer" :langsw="$t('langsw')"> -->
 				<div class="contianer">
-					<!-- <ul id="menu-nav">
-						<li v-for="l1 of $t('menu') ">
-							<a @click="showToggle" href="javascript:">{{ l1[0] }}</a>
-							<ul v-show="isShow && l1.length > 1">
-								<li v-for="l2 of l1">
-									<a href="javascript:">{{ l2 }}</a>
-								</li>
-							</ul>
-						</li>
-					</ul> -->
+				<!-- <div class="contianer" :langsw="$t('langsw')"> -->
 					<div id="menu-logo" before="" after=""></div>
 					<ul id="menu-nav">
-						<li v-for="l1 of $t('menu') ">
-							<a @click="showToggle" href="javascript:">{{ l1[0] }}</a>
-							<ul v-show="isShow && l1.length > 1">
-								<li v-for="l2 of l1">
-									<a href="javascript:">{{ l2 }}</a>
-								</li>
-							</ul>
+						<li @mouseover="show[i]=isShow=true" @mouseout="show[i]=isShow=false" v-for="(menu, i) of $t('menu')">
+							<a href="javascript:">{{ menu[0] }}</a>
+					 		<transition name="fade">
+								<ul v-show="isShow && menu.length > 1">
+									<li v-show="show[i]" v-for="submenu of menu.filter((v, i) => i > 0)">
+										<a href="javascript:">{{ submenu }}</a>
+									</li>
+								</ul>
+							</transition>
 						</li>
 					</ul>
 					<div id ="menu-langsw">
-						<a @click="changelang('zh')" id="langsw-zh" href="javascript:">{{ $t('zh') }}</a>
+						<a @click="changelang('zh')" href="javascript:">{{ $t('zh') }}</a>
 						<span> | </span>
-						<a @click="changelang('en')" id="langsw-en" href="javascript:">{{ $t('en') }}</a>
+						<a @click="changelang('en')" href="javascript:">{{ $t('en') }}</a>
 					</div>
 				</div>
 			</div>
@@ -249,7 +238,6 @@
 				zh: {
 					zh: '中文',
 					en: '英文',
-					// title: '长沙拓欧科技有限公司官网',
 					title: '拓欧科技',
 					welcome: '您好！欢迎访问拓欧科技！',
 					hotline: '销售热线：',
@@ -257,14 +245,6 @@
 						before: 'Top-Auto',
 						after: '拓欧科技',
 					},
-					// menu: {
-					// 	home: "首页",
-					// 	products: "产品中心",
-					// 	solution: "解决方案",
-					// 	support: "服务与支持",
-					// 	iot: "物联网",
-					// 	about: "关于拓欧",
-					// },
 					menu: [
 						[
 							'首页',
@@ -272,22 +252,27 @@
 						[ 
 							'产品中心',
 							'到此一游',
+							'到此一游',
 						],
 						[
 							'解决方案',
-							'到此一游',
+							'剪叉式',
+							'曲臂式',
+							'定制服务',
 						],
 						[ 
 							'服务与支持',
-							'到此一游',
+							'服务政策',
+							'车辆改装',
 						],
 						[ 
 							'物联网',
-							'到此一游',
+							'远程管理平台',
 						],
 						[
 							'关于拓欧',
-							'到此一游',
+							'拓欧简介',
+							'企业文化',
 						],
 					],
 					langsw: "中文 | 英文",
@@ -302,37 +287,32 @@
 						before: 'Top-Auto',
 						after: ' Co.,Ltd.',
 					},
-					// menu: {
-					// 	home: "Home",
-					// 	products: "Products",
-					// 	solution: "Solution",
-					// 	support: "Support",
-					// 	iot: "ioT",
-					// 	about: "About",
-					// },
 					menu: [
 						[
 							'Home',
 						],
 						[ 
 							'Products',
-							'I am comming!',
 						],
 						[
 							'Solution',
-							'I am comming!',
+							'Scissors',
+							'Crank Arm',
+							'Customize',
 						],
 						[ 
 							'Support',
-							'I am comming!',
+							'Service policy',
+							'Refit',
 						],
 						[ 
 							'ioT',
-							'I am comming!',
+							'Platform',
 						],
 						[
 							'About',
-							'I am comming!',
+							'Introduce',
+							'Culture',
 						],
 					],
 					langsw: "Chinese | English",
@@ -347,17 +327,21 @@
 				i18n: i18n,
 				phone_number: '18932483051',
 				isShow: false,
+				show: [],
 			},
 			methods: {
-				showToggle: function(){
-					this.isShow = !this.isShow
-				},
 				changelang: function(lang){
-					if (this.i18n.locale != lang)
-						this.i18n.locale = lang
+					if (this.i18n.locale != lang) this.i18n.locale = lang
+				},
+				mouseover: function(index){
+					this.$t('menu')[index][1] = true
+				},
+				mouseout: function(index){
+					this.$t('menu')[index][1] = false
 				},
 			},
 			created: function(){
+				if (clientInformation.language.indexOf('zh') <= -1) this.changelang('en');
 				document.title = this.$t('title')
 				document.querySelector('#menu-logo').setAttribute('before', this.$t('logo.before'))
 				document.querySelector('#menu-logo').setAttribute('after', this.$t('logo.after'))
