@@ -77,16 +77,60 @@
 		#contact{
 			height: 324px;
 			background: #29262a;
+			/*display: flex;*/
+		}
+
+		#contact a{
+			color: #fff;
+		}
+
+		#contact>.contianer{
+			line-height: 1.5rem;
+			/*position: relative;*/
+		}
+
+		.contact-center{
+			display: flex;
+			 justify-content: center; 
+			 transform: translate(0, 50%); 
+/*			position: absolute;
+			top: 50%;
+			transform: translate(50%, -50%);*/
+		}
+
+		.contact-center>*{
+			margin: 0 6rem;
+		}
+
+		#webnav>li:first-child, #address>li:first-child{
+			font-size: 1.2rem;
+			font-weight: bold;
+			margin-bottom: 1rem
+		}
+
+		#qrcode{
+			text-align: center;
+			color: #fff;
+		}
+
+		#qrcode>.qrcode-img-box>img{
+			width: 110px;
+			height: 110px;
 		}
 
 		#copyright{
 			height: calc(100% - 324px);
 			background: #1b181c;
+			display: block;
+			text-align: center;
+			line-height: 4rem;
+			color: #625f62;
 		}
 
 		.contianer{
 		    max-width: 1200px;
 		    margin: 0 auto;
+		    height: 100%;
 		}
 
 		#hotline{
@@ -153,7 +197,7 @@
 
 		#menu-nav>li ul{
 		    line-height: 2rem;
-		    background: #fff;
+			background: #f6f6f6;
 		    /*opacity: 0.9;*/
 		}
 
@@ -166,6 +210,11 @@
 		    /*transform: scale(0.99); */
 		}
 
+		#menu-nav>li ul>li>a:hover{
+		    background: #fff;
+			display: block;
+		}
+
 /*		#menu>.contianer:after{
 		    content: attr(langsw);
 		    line-height: 4rem;
@@ -173,7 +222,7 @@
 		}*/
 
 		.fade-enter-active, .fade-leave-active {
-		  transition: opacity 3s;
+		  transition: opacity 1s;
 		}
 		.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
 		  opacity: 0;
@@ -221,8 +270,31 @@
 		<div id="page">
 		</div>
 		<div id="footer">
-			<div id="contact"></div>
-			<div id="copyright"></div>
+			<div id="contact">
+				<div class="contianer">
+				<div class="contact-center">
+					<ul id="webnav">
+						<li v-for="(item, i) of $t('menu')"><a href="javascript:">{{ item[0] }}</a></li>
+					</ul>
+					<ul id="address">
+						<li v-for="(item, i) of $t('address')"><a href="javascript:">{{ item }}</a></li>
+					</ul>
+					<div id="qrcode">
+						<div class="qrcode-img-box">
+							<img src="images/qrcode.jpg">
+						</div>
+						<div class="qrcode-text-box">
+							<p>{{ $t('qrcode') }}</p>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+			<div id="copyright">
+				<a href="http://www.miitbeian.gov.cn" target="_blank">
+					{{ $t('copyright') }}
+				</a>
+			</div>
 		</div>
 	</div>
 
@@ -275,7 +347,14 @@
 							'企业文化',
 						],
 					],
-					langsw: "中文 | 英文",
+					address: [
+						"联系我们",
+						"地址：湖南省长沙经济技术开发区盼盼路29号",
+						"电话：18932483051",
+						"联系人：刘经理",
+					],
+					qrcode: '微信二维码',
+					copyright: '版权所有 Copyright(C) 湘ICP备18004042号-1',
 				},
 				en: {
 					zh: 'Chinese',
@@ -315,7 +394,14 @@
 							'Culture',
 						],
 					],
-					langsw: "Chinese | English",
+					address: [
+						"Contact",
+						"Address：No.29 Panpan Road, Changsha , Hunan, China",
+						"Phone: 18932483051",
+						"Linkman: Mr. Liu",
+					],
+					qrcode: 'Wechat QR code',
+					copyright: 'Copyright(C) Top-Auto Co.,Ltd.',
 				}
 			}
 		})
@@ -345,6 +431,11 @@
 				document.title = this.$t('title')
 				document.querySelector('#menu-logo').setAttribute('before', this.$t('logo.before'))
 				document.querySelector('#menu-logo').setAttribute('after', this.$t('logo.after'))
+				// Object.keys(app.i18n.messages).map(x => app.i18n.messages[x].title)
+				// Object.keys(i18n.messages).forEach(function(i){
+				// 	let address = i18n.messages[i].address
+				// 	console.log(address[2] += '110')
+				// })
 			},
 			watch: {
 				'i18n.locale': function(){
