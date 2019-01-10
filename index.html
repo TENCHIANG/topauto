@@ -205,14 +205,14 @@
 		    /*opacity: 0.9;*/
 		}
 
-		#menu-nav>li ul>li:nth-child(1):before{
+		/* 二级菜单蓝色横杠 */
+		/* #menu-nav>li ul>li:nth-child(1):before{
 		    content: "";
 		    background: blue;
 		    width: 100%;
 		    display: block;
 		    height: 2px;
-		    /*transform: scale(0.99); */
-		}
+		} */
 
 		#menu-nav>li ul>li>a:hover{
 		    background: #fff;
@@ -224,14 +224,6 @@
 		    line-height: 4rem;
 		    margin: 0 auto;
 		}*/
-
-		.fade-enter-active, .fade-leave-active {
-			/*transition: opacity 1s;*/
-			transition: opacity .5s ease-in .1s;
-		}
-		.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-			opacity: 0;
-		}
 
 		div.nav-banner{
 			height: 100%;
@@ -266,6 +258,13 @@
 			background-color: #3C9DFF!important;
 		}
 
+		.fade-enter-active, .fade-leave-active {
+			transition: all ease 1s;
+		}
+		.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+			opacity: 0;
+		}
+
 	</style>
 
 </head>
@@ -286,11 +285,11 @@
 					<ul id="menu-nav">
 						<li @mouseover="show[i]=isShow=true" @mouseout="show[i]=isShow=false" v-for="(menu, i) of $t('menu')">
 							<a href="javascript:">{{ menu[0] }}</a>
-					 		<transition name="fade">
+							<transition name="fade">
 								<ul v-show="isShow && menu.length > 1">
-									<li v-show="show[i]" v-for="submenu of menu.filter((v, i) => i > 0)">
-										<a href="javascript:">{{ submenu }}</a>
-									</li>
+										<li v-show="show[i]" v-for="submenu of menu.filter((v, i) => i > 0)">
+											<a href="javascript:">{{ submenu }}</a>
+										</li>
 								</ul>
 							</transition>
 						</li>
@@ -304,10 +303,12 @@
 			</div>
 		</div>
 		<div id="nav">
-			<div class="nav-banner">	
-				<transition-group name="fade">	
-					<a v-for="(v, i) of banner" :key="i" v-show="i===bannerMark" href="javascript:"><img :src="v" alt=""></a>
-				</transition-group>
+			<div class="nav-banner">		
+				<a href="javascript:">
+					<transition name="fade">
+						<img :src="banner[bannerMark]" alt="">
+					</transition>
+				</a>
 			</div>
 			<div class="nav-banner-control">
 				<a v-for="(v, i) of banner" :key="i" @click="bannerChange(i)" href="javascript:">
